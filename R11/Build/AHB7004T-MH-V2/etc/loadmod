@@ -1,0 +1,17 @@
+#!/bin/sh
+
+#cd /usr/lib/modules/
+#unrar x /usr/lib/modules.rar /var/
+cp /usr/lib/modules.tar.lzma /var/
+cd /var/
+tar -axf /usr/lib/modules.tar.lzma
+
+cd /var/modules/
+./load3520dV300 -i
+cd /var/
+rm /var/modules -fr
+rm /var/modules.tar.lzma -fr
+cd /usr/etc/
+./sysctl_asic.sh
+#./S81toe
+cd /

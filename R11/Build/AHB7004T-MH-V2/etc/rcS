@@ -1,0 +1,49 @@
+#!/bin/sh
+
+/etc/init.d/dnode
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+mdev -s
+
+mount -t squashfs /dev/mtdblock2 /usr   
+mount -t squashfs /dev/mtdblock3 /mnt/web
+mount -t squashfs /dev/mtdblock4 /mnt/custom
+mount -t cramfs /dev/mtdblock5 /mnt/logo
+mount -t jffs2 /dev/mtdblock6 /mnt/mtd
+
+mount -t ramfs  /dev/mem        /var
+mount -t usbfs none /proc/bus/usb/
+
+mkdir -p /mnt/mtd/Config /mnt/mtd/Log /mnt/mtd/Config/ppp /mnt/mtd/Config/Json
+
+if [ ! -f /mnt/mtd/Config/HvrMode ] && [ -f /mnt/custom/HvrMode ]; then
+	cp /mnt/custom/HvrMode /mnt/mtd/Config/
+fi
+if [ -f /mnt/mtd/Config/ppp/3gdigal ]; then
+	chmod 777 /mnt/mtd/Config/ppp/3gdigal
+fi
+cd /usr/etc
+./loadmod
+ifconfig eth0 up
+ifconfig eth0 192.168.1.30
+ifconfig eth0:0 192.168.0.30
+ifconfig lo 127.0.0.1 up
+echo 2548 > /proc/sys/vm/min_free_kbytes
+
+sleep 1
+telnetd &
+
+
+
+
+/usr/etc/pppd pty /etc/ppp/pppoe-start file /etc/ppp/pppoe-options &
+
+/mnt/custom/extapp.sh &
+
+#unrar x /usr/bin/Sofia.rar /var/
+cp /usr/bin/Sofia.tar.lzma /var/
+cd /var/
+tar -axf /usr/bin/Sofia.tar.lzma
+
+chmod 777 /var/Sofia
+rm /var/Sofia.tar.lzma -fr
+dvrHelper /lib/modules /var/Sofia 127.0.0.1 9578 1
