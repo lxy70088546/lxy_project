@@ -130,7 +130,8 @@ insert_ko()
 	insmod hi3521a_h264e.ko	H264eVBSource=2 H264eRcnEqualRef=1 H264eMiniBufMode=1
 	insmod hi3521a_vda.ko
 	
-    insmod extdrv/gpioi2c.ko
+  insmod extdrv/gpioi2c.ko
+
 	insmod extdrv/hi_rtc.ko
 	insmod extdrv/hiwdt.ko
 	insmod extdrv/hi_ir.ko
@@ -138,6 +139,7 @@ insert_ko()
 	insmod extdrv/usb_wwan.ko
 	insmod extdrv/option.ko
 	insmod extdrv/sil9293.ko
+	insmod extdrv/dx8_gpio_i2c.ko
 	
 #	echo "==== Your input AD type is $AD_TYPE ===="
 	#insert_ad
