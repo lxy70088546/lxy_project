@@ -944,7 +944,7 @@ rimg:
 		cp $(TOP_DIR)/Packshop/HI3520DV300/bin/dvrbox  $(WORK_DIR)/romfs/bin/ -rf ;	\
 	fi	
 	@if [ -e $(SOURCE_DIR)/Build/$(MAKE_DIR)/bin/dvrbox ]; then \
-		cp $(SOURCE_DIR)/Build/$(MAKE_DIR)/bin/dvrbox  $(WORK_DIR)/romfs/bin/ -rf ;	\
+		cp $(SOURCE_DIR)/Build/$(MAKE_DIR)/bin/*  $(WORK_DIR)/romfs/bin/ -rf ;	\
 	fi
 
 	@if [ -f $(SOURCE_DIR)/Build/$(MAKE_DIR)/bin/dvrbox_$(OEM_VENDOR_BUILD) ]; then \
